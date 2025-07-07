@@ -1,0 +1,24 @@
+.year{
+    font-size: 20px;
+}
+
+.class{
+    font-size:20px;
+}
+.course{
+    font-size:20px;
+}
+
+.timetable {
+    font-size: 40px;
+}
+
+p {
+  color: red;
+}
+
+.form-row p{
+  display: inline-block;
+ margin-right:20px;
+ vertical-align:middle;
+}
