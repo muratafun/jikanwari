@@ -1,0 +1,102 @@
+[
+    {
+      "dayperiod": "mon2",
+      "classes": ["G", "H", "I", "J", "K", "L"],
+      "options": ["", "電子工学基礎", "環境と産業"]
+    },
+    {
+      "dayperiod": "mon2",
+      "classes": ["E", "F"],
+      "options": ["",  "環境と産業"]
+    },
+    {
+      "dayperiod": "mon3",
+      "classes": ["G", "H"],
+      "options": ["", "余暇と健康Ⅱ"]
+    },
+    {
+      "dayperiod": "fri1",
+      "classes": ["A", "B", "C", "D","E","F","G","H","I","J","K","L"],
+      "options": ["", "データサイエンス入門"]
+    },
+    {
+      "dayperiod": "fri2",
+      "classes": ["A", "B", "C", "D","E","F","G","H","I","J","K","L"],
+      "options": ["", "ブレインサイエンス"]
+    },
+    {
+      "dayperiod": "fri3",
+      "classes": ["A", "B", "E","F","G","H"],
+      "options": ["", "発達と学習"]
+    },
+    {
+      "dayperiod": "fri5",
+      "classes": ["A", "B","E","F","G","H","I","J","K","L"],
+      "options": ["", "起業家としての自立"]
+    },
+    {
+      "dayperiod": "fri5",
+      "classes": ["A", "B","E","F","G","H","K","L"],
+      "options": ["", "3Q:コミュニケーション論"]
+    },
+    {
+      "dayperiod": "mon3",
+      "classes": ["A", "B", "C", "D","E","F","I","J","K","L"],
+      "options": ["", "社会思想の歩み"]
+    },
+    {
+      "dayperiod": "tue2",
+      "classes": ["A", "B","C","D", "E","F"],
+      "options": ["", "電子工学基礎"]
+    },
+    {
+      "dayperiod": "tue2",
+      "classes": ["A", "B","E","F","G","H","K","L"],
+      "options": ["", "3Q:コミュニケーション論"]
+    },
+    {
+      "dayperiod": "tue3",
+      "classes": ["K", "L"],
+      "options": ["", "余暇と健康Ⅱ"]
+    },
+    {
+      "dayperiod": "tue4",
+      "classes": ["A", "B", "C", "G","H","I","J","K","L"],
+      "options": ["", "社会と経済の把握"]
+    },
+    {
+      "dayperiod": "tue5",
+      "classes": ["A", "B", "C", "D","E","F","G","H","I","J","K","L"],
+      "options": ["", "海の科学"]
+    },
+    {
+      "dayperiod": "wed2",
+      "classes": ["E","F"],
+      "options": ["", "余暇と健康Ⅱ"]
+    },
+    {
+      "dayperiod": "wed3",
+      "classes": ["C","D"],
+      "options": ["", "余暇と健康Ⅱ"]
+    },
+    {
+      "dayperiod": "wed5",
+      "classes": ["A", "B", "C", "D","G","H","I","J","K","L"],
+      "options": ["", "心理学"]
+    },
+    {
+      "dayperiod": "thu2",
+      "classes": ["A", "B"],
+      "options": ["", "余暇と健康Ⅱ"]
+    },
+    {
+      "dayperiod": "thu3",
+      "classes": ["I", "J"],
+      "options": ["", "余暇と健康Ⅱ"]
+    },
+    {
+      "dayperiod": "thu5",
+      "classes": ["A", "B", "C", "D","E","F","I","J","K","L"],
+      "options": ["", "現代デザイン論","情報産業論"]
+    }
+]
