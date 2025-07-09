@@ -2,6 +2,7 @@
   let timetableData = {};
 
   let selectableSubjects = [];
+  let creditMap = {};
 
   Promise.all([
 	  fetch('data/timetable.json').then(res => res.json()),
@@ -10,6 +11,7 @@
     .then(([timetable, selectables]) => {
     	timetableData = timetable;
 		selectableSubjects = selectables;
+    creditMap = timetable.creditMap || {};
 		setupListeners();
       	updateSubject();
 	})
@@ -156,5 +158,39 @@
 
   tableHTML += `</table>`;
   container.innerHTML = tableHTML;
+
+  // 単位数集計処理
+  let totalCredits = 0;
+  const countedSubjects = new Set(); // 重複登録防止
+
+  for (const period of periods) {
+    for (const day of days) {
+      const cellId = `${day}${period}`;
+      const cell = document.getElementById(cellId);
+      let value = "";
+
+      if (cell.querySelector("select")) {
+        value = cell.querySelector("select").value;
+      } else {
+        value = cell.textContent.trim();
+      }
+
+      if (creditMap[value] && !countedSubjects.has(value)) {
+        totalCredits += creditMap[value];
+        countedSubjects.add(value);
+      }
+    }
+  }
+
+ // 単位を計算した科目一覧を表示用に変換
+const subjectsList = Array.from(countedSubjects).join(", ");
+
+// 合計単位数と科目名の両方を表示
+tableHTML += `<p><strong>合計単位数：</strong> ${totalCredits} 単位</p>`;
+tableHTML += `<p><strong>対象科目：</strong> ${subjectsList}</p>`;
+
+container.innerHTML = tableHTML;
+
+
 }
 
