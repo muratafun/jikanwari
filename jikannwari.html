@@ -110,125 +110,29 @@
 
   <script>
   let timetableData = {};
+  let selectable = [];
+let creditMap = {};
+let linkedSubjects = [];
 
-  const selectableSubjects = [
-    {
-      "dayperiod": "mon2",
-      "classes": ["G", "H", "I", "J", "K", "L"],
-      "options": ["", "電子工学基礎", "環境と産業"]
-    },
-    {
-      "dayperiod": "mon2",
-      "classes": ["E", "F"],
-      "options": ["",  "環境と産業"]
-    },
-    {
-      "dayperiod": "mon3",
-      "classes": ["G", "H"],
-      "options": ["", "余暇と健康Ⅱ"]
-    },
-    {
-      "dayperiod": "fri1",
-      "classes": ["A", "B", "C", "D","E","F","G","H","I","J","K","L"],
-      "options": ["", "データサイエンス入門"]
-    },
-    {
-      "dayperiod": "fri2",
-      "classes": ["A", "B", "C", "D","E","F","G","H","I","J","K","L"],
-      "options": ["", "ブレインサイエンス"]
-    },
-    {
-      "dayperiod": "fri3",
-      "classes": ["A", "B", "E","F","G","H"],
-      "options": ["", "発達と学習"]
-    },
-    {
-      "dayperiod": "fri5",
-      "classes": ["A", "B","E","F","G","H","I","J","K","L"],
-      "options": ["", "起業家としての自立"]
-    },
-    {
-      "dayperiod": "fri5",
-      "classes": ["A", "B","E","F","G","H","K","L"],
-      "options": ["", "3Q:コミュニケーション論"]
-    },
-    {
-      "dayperiod": "mon3",
-      "classes": ["A", "B", "C", "D","E","F","I","J","K","L"],
-      "options": ["", "社会思想の歩み"]
-    },
-    {
-      "dayperiod": "tue2",
-      "classes": ["A", "B","C","D", "E","F"],
-      "options": ["", "電子工学基礎"]
-    },
-    {
-      "dayperiod": "tue2",
-      "classes": ["A", "B","E","F","G","H","K","L"],
-      "options": ["", "3Q:コミュニケーション論"]
-    },
-    {
-      "dayperiod": "tue3",
-      "classes": ["K", "L"],
-      "options": ["", "余暇と健康Ⅱ"]
-    },
-    {
-      "dayperiod": "tue4",
-      "classes": ["A", "B", "C", "G","H","I","J","K","L"],
-      "options": ["", "社会と経済の把握"]
-    },
-    {
-      "dayperiod": "tue5",
-      "classes": ["A", "B", "C", "D","E","F","G","H","I","J","K","L"],
-      "options": ["", "海の科学"]
-    },
-    {
-      "dayperiod": "wed2",
-      "classes": ["E","F"],
-      "options": ["", "余暇と健康Ⅱ"]
-    },
-    {
-      "dayperiod": "wed3",
-      "classes": ["C","D"],
-      "options": ["", "余暇と健康Ⅱ"]
-    },
-    {
-      "dayperiod": "wed5",
-      "classes": ["A", "B", "C", "D","G","H","I","J","K","L"],
-      "options": ["", "心理学"]
-    },
-    {
-      "dayperiod": "thu2",
-      "classes": ["A", "B"],
-      "options": ["", "余暇と健康Ⅱ"]
-    },
-    {
-      "dayperiod": "thu3",
-      "classes": ["I", "J"],
-      "options": ["", "余暇と健康Ⅱ"]
-    },
-    {
-      "dayperiod": "thu5",
-      "classes": ["A", "B", "C", "D","E","F","I","J","K","L"],
-      "options": ["", "現代デザイン論","情報産業論"]
-    }
-    // 他の選択科目も必要に応じて追加してください
-  ];
+ fetch('timetable.json')
+  .then(res => {
+    if (!res.ok) throw new Error('Failed to load timetable.json');
+    return res.json();
+  })
+  .then(data => {
+    console.log('Loaded timetable.json:', data); // ← ここ追加
+    timetableData = data;
+    selectable = timetableData["1"].nocourse.selectable;
+    creditMap = timetableData.creditMap;
+    linkedSubjects = timetableData.linkedSubjects;
 
-  const linkedSubjects = [
-    {
-      subject: "3Q:コミュニケーション論",
-      dayperiods: ["tue2", "fri5"]
-    }
-  ];
+    setupListeners();
+    updateSubject();
+  })
+  .catch(error => {
+    console.error('Error loading timetable.json:', error);
+  });
 
-  fetch('timetable.json')
-    .then(res => res.json())
-    .then(data => {
-      timetableData = data;
-      setupListeners();
-      updateSubject();
-    });
 
   function setupListeners() {
     document.getElementById('year').addEventListener('change', updateSubject);
@@ -247,7 +151,7 @@
       for (const period of periods) {
         const cellId = `${day}${period}`;
         const cell = document.getElementById(cellId);
-        const isSelectable = selectableSubjects.some(item => item.dayperiod === cellId && item.classes.includes(selectedClass));
+        const isSelectable = selectable.some(item => item.dayperiod === cellId && item.classes.includes(selectedClass));
         if (cell) {
           if (isSelectable) {
             cell.innerHTML = "";
@@ -268,7 +172,7 @@
       for (const key in groupData) {
         if (key === "classes") continue;
 
-        const isSelectable = selectableSubjects.some(item =>
+        const isSelectable = selectable.some(item =>
           item.dayperiod === key && item.classes.includes(selectedClass)
         );
         if (isSelectable) continue;
@@ -278,7 +182,7 @@
       }
     }
 
-    for (const item of selectableSubjects) {
+    for (const item of selectable) {
       if (!item.classes.includes(selectedClass)) continue;
 
       const cell = document.getElementById(item.dayperiod);
@@ -369,6 +273,41 @@
 
   tableHTML += `</table>`;
   container.innerHTML = tableHTML;
+
+  // 単位数集計処理
+  let totalCredits = 0;
+  const countedSubjects = new Set(); // 重複登録防止
+
+  for (const period of periods) {
+    for (const day of days) {
+      const cellId = `${day}${period}`;
+      const cell = document.getElementById(cellId);
+      let value = "";
+
+      if (cell.querySelector("select")) {
+        value = cell.querySelector("select").value;
+      } else {
+        value = cell.textContent.trim();
+      }
+
+      if (creditMap[value] && !countedSubjects.has(value)) {
+        totalCredits += creditMap[value];
+        countedSubjects.add(value);
+      }
+    }
+  }
+
+ // 単位を計算した科目一覧を表示用に変換
+const subjectsList = Array.from(countedSubjects).join(", ");
+
+// 合計単位数と科目名の両方を表示
+tableHTML += `<p><strong>合計単位数：</strong> ${totalCredits} 単位</p>`;
+tableHTML += `<p><strong>対象科目：</strong> ${subjectsList}</p>`;
+
+container.innerHTML = tableHTML;
+
+
+
 }
 
 
@@ -376,3 +315,4 @@
 
 </body>
 </html>
+
