@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>履修登録</title>
+  <link href="newstyle.css" rel="stylesheet" />
+</head>
+<body>
+    <p id="warning" style="color: red; font-weight: bold;"></p>
+
+  <div class="form-row">
+    <h1>1年</h1>
+    <p class="year">学年：
+      <select id="year" name="year">
+        <option value="1">１年</option>
+        <option value="2">２年</option>
+      </select>
+    </p>
+    <p class="class">クラス：
+      <select name="class" id="class">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="G">G</option>
+        <option value="H">H</option>
+        <option value="I">I</option>
+        <option value="J">J</option>
+        <option value="K">K</option>
+        <option value="L">L</option>
+      </select>
+    </p>
+    <p class="course">コース：
+      <select name="course" id="course">
+        <option value="nocourse">未配属</option>
+        <option value="siscourse">情報システムコース</option>
+        <option value="descourse">情報デザインコース</option>
+        <option value="comcourse">複雑系コース</option>
+        <option value="intcourse">知能システムコース</option>
+      </select>
+    </p>
+  </div>
+
+  <div style="margin-top: 20px;">
+  <button onclick="confirmSchedule()">時間割を確定する</button>
+</div>
+
+<div id="confirmedScheduleContainer"></div>
+
+
+
+
+  <div class="timetable">
+    <table border="1">
+      <tr>
+        <th></th>
+        <th>月</th>
+        <th>火</th>
+        <th>水</th>
+        <th>木</th>
+        <th>金</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td id="mon1"></td>
+        <td id="tue1"></td>
+        <td id="wed1"></td>
+        <td id="thu1"></td>
+        <td id="fri1"></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td id="mon2"></td>
+        <td id="tue2"></td>
+        <td id="wed2"></td>
+        <td id="thu2"></td>
+        <td id="fri2"></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td id="mon3"></td>
+        <td id="tue3"></td>
+        <td id="wed3"></td>
+        <td id="thu3"></td>
+        <td id="fri3"></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td id="mon4"></td>
+        <td id="tue4"></td>
+        <td id="wed4"></td>
+        <td id="thu4"></td>
+        <td id="fri4"></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td id="mon5"></td>
+        <td id="tue5"></td>
+        <td id="wed5"></td>
+        <td id="thu5"></td>
+        <td id="fri5"></td>
+      </tr>
+    </table>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
