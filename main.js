@@ -109,6 +109,58 @@
     }
   }
 
+  const recommendationModels = {
+  "1_A": {
+    credits: 24,
+    timetable: [
+      ["解析学２", "数学総合演習２", "プログラミング基礎", "", "データサイエンス入門"],
+      ["線形代数学２", "", "プログラミング基礎", "", "ブレインサイエンス"],
+      ["社会思想の歩み", "Communication2", "プログラミング基礎", "Communication2", ""],
+      ["VEP2", "社会と経済の把握", "情報数学", "", ""],
+      ["", "", "", "", ""]
+    ]
+  },
+  "1_E": {
+    credits: 24,
+    timetable: [
+      ["解析学２", "", "", "線形代数学２", "データサイエンス入門"],
+      ["環境と産業", "", "", "数学総合演習２", "ブレインサイエンス"],
+      ["社会思想の歩み", "情報数学", "プログラミング基礎", "", "発達と学習"],
+      ["VEP2", "Communication2", "プログラミング基礎", "Communication2", ""],
+      ["", "", "プログラミング基礎", "情報産業論", ""]
+    ]
+  }
+};
+
+    function showRecommendation() {
+      const year = document.getElementById('year').value;
+      const classVal = document.getElementById('class').value;
+      const key = `${year}_${classVal}`;
+      const area = document.getElementById('recommendationArea');
+
+      if (!recommendationModels[key]) {
+        area.innerHTML = '<p>この学年・クラスに対する履修提案はまだ登録されていません。</p>';
+        return;
+      }
+
+      const model = recommendationModels[key];
+const timetable = model.timetable;
+let html = `<h2>このような履修例はいかがですか？（合計 ${model.credits} 単位）</h2>`;
+html += '<table border="1">';
+html += '<tr><th></th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th></tr>';
+for (let i = 0; i < 5; i++) {
+  html += `<tr><td>${i+1}</td>`;
+  for (let j = 0; j < 5; j++) {
+    html += `<td>${timetable[i][j]}</td>`;
+  }
+  html += '</tr>';
+}
+html += '</table>';
+
+      area.innerHTML = html;
+    }
+
+
   function confirmSchedule() {
   const days = ["mon", "tue", "wed", "thu", "fri"];
   const periods = [1, 2, 3, 4, 5];
@@ -158,7 +210,7 @@
 
   tableHTML += `</table>`;
   container.innerHTML = tableHTML;
-
+  
   // 単位数集計処理
   let totalCredits = 0;
   const countedSubjects = new Set(); // 重複登録防止
